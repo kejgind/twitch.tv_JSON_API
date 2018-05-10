@@ -1,0 +1,21 @@
+{
+  "name": "twitch-app",
+  "version": "1.0.0",
+  "description": "Twitch.tv JSON API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "browser-sync start --server 'app' --files 'app' --port 8080 --browser 'chromium-browser' --cors"
+  },
+  "keywords": [
+    "twitch.tv",
+    "api",
+    "webapp"
+  ],
+  "author": "Krzysztof G.",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "eslint": "^4.19.1"
+  }
+}
