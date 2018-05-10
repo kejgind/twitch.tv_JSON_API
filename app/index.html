@@ -1,15 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="css/style.css">
   <title>twitch.tv JSON API</title>
 </head>
-<body>
-  
 
-  <script src="app.js"></script>
+<body>
+  <div class="container">
+    <nav class="nav__filter">
+      <ul class="nav__filter__list">
+        <li class="nav__filter__list__item items__all jsAll">
+          <a href="" class="items__all__link">All</a>
+        </li>
+        <li class="nav__filter__list__item items__online jsOnline">
+          <a href="" class="items__all__link">Online</a>
+        </li>
+        <li class="nav__filter__list__item items__offline jsOffline">
+          <a href="" class="items__all__link">Offline</a>
+        </li>
+      </ul>
+    </nav>
+    <form action="">
+      <label for="search"></label>
+      <input type="search" name="search" id="searchBox">
+    </form>
+    <div class="channels jsChannelsWrap">
+
+    </div>
+  </div>
+
+  <script src="scripts/main.js"></script>
 </body>
+
 </html>

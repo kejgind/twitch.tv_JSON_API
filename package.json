@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "browser-sync start --server 'app' --files 'app' --port 8080 --browser 'chromium-browser' --cors"
+    "start": "browser-sync start --server 'app' --files 'app' --port 8080 --browser 'google-chrome'"
   },
   "keywords": [
     "twitch.tv",
@@ -16,6 +16,7 @@
   "license": "MIT",
   "dependencies": {},
   "devDependencies": {
+    "browser-sync": "^2.24.4",
     "eslint": "^4.19.1"
   }
 }
