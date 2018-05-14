@@ -1,0 +1,77 @@
+body {
+  background-color: #bbb;
+  color: #555;
+  margin-top: 3rem;
+}
+
+.container {
+  margin: 0 auto;
+  max-width: 900px;
+}
+
+.nav__filter__list {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+.items__all__link {
+  text-decoration: none;
+  padding: 10px 15px;
+  border: 1px solid #555;
+  margin: 2px;
+  color: #555;
+}
+
+.items__all__link.active {
+  background-color: #4B367C;
+  color: #fff;
+}
+
+.search-field {
+  width: 100%;
+  margin: 1rem auto;
+  text-align: center;
+}
+
+.channel {
+  border: 1px solid #fff;
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 1rem 1rem;
+}
+
+.channel-logo {
+  height: 100px;
+  width: 100px;
+}
+
+.channel-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.channel-name, .channel-bio {
+  margin: 0 10px 5px;
+}
+
+.channel-status {
+  width: 100%;
+  margin: 0;
+  text-align: center;
+}
+
+.channel.online {
+  background-color: #4B367C;
+  color: #fff;
+}
+.channel.online a {
+  color: #D3CAE8;
+  text-decoration: none;
+}

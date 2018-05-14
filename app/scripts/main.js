@@ -62,9 +62,11 @@ const displayChanells = element => {
   appendHTML.className = 'channel';
   appendHTML.innerHTML = `
     <img class='channel-logo' src='${channelLogo}' alt='${channelName}' />
-    <h2 class='channel-name'>${channelName}</h2>
+    <div class='channel-info'>
+      <h2 class='channel-name'>${channelName}</h2>
+      <p class='channel-bio'>${channelBio}</p>
+    </div>
     <p class='channel-status' id='${channelID}-status'>offline</p>
-    <p class='channel-bio'>${channelBio}</p>
   `;
 
   const jsChannelsWrap = document.querySelector('.jsChannelsWrap');
@@ -75,12 +77,14 @@ const displayStreamStatus = info => {
   if (info.stream !== null) {
     const channelID = info.stream.channel._id;
     const channelLink = info.stream.channel.url;
-    const channelName = info.stream.channel.display_name;
+    const channelStatus = info.stream.channel.status;
     const addLink = `
-    <a href='${channelLink}' target='_blank' rel='noopener'>${channelName}</a>
+    <a href='${channelLink}' target='_blank' rel='noopener'>&raquo; ${channelStatus} &laquo;</a>
     `;
     const channelStatusDOM = document.getElementById(`${channelID}-status`);
-    return (channelStatusDOM.innerHTML = addLink);
+    const channelDOM = document.getElementById(`${channelID}`);
+    channelStatusDOM.innerHTML = addLink;
+    channelDOM.classList.add('online');
   }
 };
 
@@ -99,6 +103,8 @@ for (let user of twitchUsers) {
           return checkTwitchUserStreams(userIds.users[0]._id, Id);
         })
         .then(streams => {
+          /* eslint-disable-next-line no-console */
+          console.log(streams);
           return displayStreamStatus(streams);
         })
         .catch(error => {
