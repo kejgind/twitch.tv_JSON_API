@@ -14,21 +14,18 @@
     <h1 class="app-title">twitch.tv JSON API</h1>
     <nav class="nav__filter">
       <ul class="nav__filter__list">
-        <li class="nav__filter__list__item items__all jsAll">
-          <a href="" class="items__all__link active">All</a>
+        <li class="nav__filter__list__item">
+          <a href="" class="items__filter__link jsLink jsAllChannels active">All</a>
         </li>
-        <li class="nav__filter__list__item items__online jsOnline">
-          <a href="" class="items__all__link">Online</a>
+        <li class="nav__filter__list__item">
+          <a href="" class="items__filter__link jsLink jsOnChannels">Online</a>
         </li>
-        <li class="nav__filter__list__item items__offline jsOffline">
-          <a href="" class="items__all__link">Offline</a>
+        <li class="nav__filter__list__item">
+          <a href="" class="items__filter__link jsLink jsOffChannels">Offline</a>
         </li>
       </ul>
     </nav>
-    <!-- <form class="search-form">
-      <label for="search"></label> -->
-    <input class="search-field" type="search" name="search" id="searchBox">
-    <!-- </form> -->
+    <input class="search-field" type="search" name="search" id="searchBox" placeholder="Filter retrived channels">
     <div class="channels jsChannelsWrap">
 
     </div>

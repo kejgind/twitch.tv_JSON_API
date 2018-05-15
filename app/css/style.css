@@ -18,7 +18,7 @@ body {
   padding: 0;
 }
 
-.items__all__link {
+.items__filter__link {
   text-decoration: none;
   padding: 10px 15px;
   border: 1px solid #555;
@@ -26,7 +26,7 @@ body {
   color: #555;
 }
 
-.items__all__link.active {
+.items__filter__link.active {
   background-color: #4B367C;
   color: #fff;
 }

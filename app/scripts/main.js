@@ -13,9 +13,10 @@ const twitchUsers = [
   'ESL_SC2',
   'AmazHS',
   'Firebat',
-  'armatvhs',
+  'armatvhs'
 ];
 
+// Get clientID to connetct to twitch API
 const getClientId = new Promise((resolve, reject) => {
   fetch(clientIdURL)
     .then(resolve => resolve.json())
@@ -23,13 +24,14 @@ const getClientId = new Promise((resolve, reject) => {
     .catch(error => reject(error));
 });
 
+// Get specified in 'twitchUsers' twitch users data
 const getTwitchUsers = (clientId, twitchUser) => {
   return new Promise((resolve, reject) => {
     fetch(`${twitchUsersURL}${twitchUser}`, {
       headers: {
         Accept: 'application/vnd.twitchtv.v5+json',
-        'Client-ID': clientId,
-      },
+        'Client-ID': clientId
+      }
     })
       .then(resolve => resolve.json())
       .then(data => resolve(data))
@@ -37,13 +39,14 @@ const getTwitchUsers = (clientId, twitchUser) => {
   });
 };
 
+// Check which users are currently streaming
 const checkTwitchUserStreams = (twitchUserId, clientId) => {
   return new Promise((resolve, reject) => {
     fetch(`${twitchStreamsURL}${twitchUserId}`, {
       headers: {
         Accept: 'application/vnd.twitchtv.v5+json',
-        'Client-ID': clientId,
-      },
+        'Client-ID': clientId
+      }
     })
       .then(resolve => resolve.json())
       .then(data => resolve(data))
@@ -51,6 +54,7 @@ const checkTwitchUserStreams = (twitchUserId, clientId) => {
   });
 };
 
+// UI - display channels
 const displayChanells = element => {
   const channelName = element[0].display_name;
   const channelBio = element[0].bio;
@@ -59,7 +63,7 @@ const displayChanells = element => {
 
   let appendHTML = document.createElement('div');
   appendHTML.id = channelID;
-  appendHTML.className = 'channel';
+  appendHTML.className = 'channel offline';
   appendHTML.innerHTML = `
     <img class='channel-logo' src='${channelLogo}' alt='${channelName}' />
     <div class='channel-info'>
@@ -73,6 +77,7 @@ const displayChanells = element => {
   jsChannelsWrap.appendChild(appendHTML);
 };
 
+// UI - display stream info
 const displayStreamStatus = info => {
   if (info.stream !== null) {
     const channelID = info.stream.channel._id;
@@ -84,10 +89,71 @@ const displayStreamStatus = info => {
     const channelStatusDOM = document.getElementById(`${channelID}-status`);
     const channelDOM = document.getElementById(`${channelID}`);
     channelStatusDOM.innerHTML = addLink;
+    channelDOM.classList.remove('offline');
     channelDOM.classList.add('online');
   }
 };
 
+// UI - sort users with All/Online/Offline buttons
+const statusButtons = Array.from(document.querySelectorAll('.jsLink'));
+const allButton = document.querySelector('.jsAllChannels');
+const searchBox = document.getElementById('searchBox');
+
+const setActive = e => {
+  statusButtons.forEach(btn => btn.classList.remove('active'));
+  e.target.classList.add('active');
+};
+
+const sortChannels = () => {
+  const selectedButton = Array.from(
+    document.querySelector('.jsLink.active').classList
+  );
+  const allChannels = document.querySelectorAll('.channel');
+  const onChannels = document.querySelectorAll('.channel.online');
+  const offChannels = document.querySelectorAll('.channel.offline');
+
+  if (selectedButton.includes('jsOnChannels')) {
+    offChannels.forEach(channel => (channel.style.display = 'none'));
+    onChannels.forEach(channel => (channel.style.display = 'flex'));
+  } else if (selectedButton.includes('jsOffChannels')) {
+    onChannels.forEach(channel => (channel.style.display = 'none'));
+    offChannels.forEach(channel => (channel.style.display = 'flex'));
+  } else if (selectedButton.includes('jsAllChannels')) {
+    allChannels.forEach(channel => (channel.style.display = 'flex'));
+  }
+};
+
+statusButtons.forEach(btn =>
+  btn.addEventListener('click', e => {
+    e.preventDefault();
+    setActive(e);
+    sortChannels();
+  })
+);
+
+// UI - filter users with search input
+
+const filterChannels = val => {
+  const allChannels = Array.from(document.querySelectorAll('.channel-name'));
+  allChannels.forEach(channel => {
+    const rootElement = channel.parentElement.parentElement;
+    if (channel.textContent.toLowerCase().indexOf(val) !== -1) {
+      rootElement.style.display = 'flex';
+    } else {
+      rootElement.style.display = 'none';
+    }
+  });
+};
+
+searchBox.addEventListener('keyup', e => {
+  e.preventDefault();
+  statusButtons.forEach(btn => btn.classList.remove('active'));
+  allButton.classList.add('active');
+  const text = e.target.value.toLowerCase();
+  filterChannels(text);
+});
+
+// Events
 for (let user of twitchUsers) {
   getClientId
     .then(Id => {
@@ -103,9 +169,7 @@ for (let user of twitchUsers) {
           return checkTwitchUserStreams(userIds.users[0]._id, Id);
         })
         .then(streams => {
-          /* eslint-disable-next-line no-console */
-          console.log(streams);
-          return displayStreamStatus(streams);
+          displayStreamStatus(streams);
         })
         .catch(error => {
           /* eslint-disable-next-line no-console */
